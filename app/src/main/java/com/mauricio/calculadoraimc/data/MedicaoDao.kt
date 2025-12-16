@@ -6,7 +6,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MedicaoDao {
+interface  MedicaoDao {
     // Insere uma nova medição no banco
     @Insert
     suspend fun inserir(medicao: Medicao)

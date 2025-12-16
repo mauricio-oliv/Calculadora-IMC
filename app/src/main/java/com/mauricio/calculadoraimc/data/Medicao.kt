@@ -17,5 +17,7 @@ data class Medicao(
     val tmb: Double,
     val pesoIdeal: Double,
     val gordura: Double,
+    // NOVO CAMPO: Atividade Física
+    val atividade: String, // Adicionar para persistência
     val data: Date = Date()
 )

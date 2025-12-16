@@ -1,5 +1,7 @@
 package com.mauricio.calculadoraimc.domain
 
+import kotlin.math.log10
+
 object CalculadoraSaude {
 
     fun calcularIMC(peso: Double, altura: Double): Double {
@@ -30,13 +32,61 @@ object CalculadoraSaude {
 
     // Estimativa simples baseada no IMC
     fun calcularPesoIdeal(altura: Double): Double {
-        // IMC médio desejável de 22
         return 22.0 * (altura * altura)
     }
 
-    // Fórmula de Deurenberg para gordura corporal
+    // Fórmula de Deurenberg (mantida)
     fun calcularGordura(imc: Double, idade: Int, genero: String): Double {
         val s = if (genero == "Masculino") 1 else 0
         return (1.20 * imc) + (0.23 * idade) - (10.8 * s) - 5.4
+    }
+
+    fun getFatorAtividade(atividade: String): Double {
+        return when (atividade) {
+            "Sedentário" -> 1.2
+            "Leve" -> 1.375
+            "Moderado" -> 1.55
+            "Intenso" -> 1.725
+            else -> 1.2
+        }
+    }
+
+    fun calcularTCD(tmb: Double, atividade: String): Double {
+        return tmb * getFatorAtividade(atividade)
+    }
+
+    // --- GORDURA CORPORAL - US NAVY (VERSÃO CORRIGIDA E ESTÁVEL) ---
+
+    /**
+     * Todas as medidas devem ser informadas em CENTÍMETROS (cm).
+     */
+    fun calcularGorduraMarinha(
+        genero: String,
+        alturaCm: Double,
+        pescocoCm: Double,
+        cinturaCm: Double,
+        quadrilCm: Double // usado apenas para mulheres
+    ): Double {
+
+        if (alturaCm <= 0) return 0.0
+
+        return if (genero == "Masculino") {
+
+            val diferenca = cinturaCm - pescocoCm
+            if (diferenca <= 0) return 0.0
+
+            86.010 * log10(diferenca) -
+                    70.041 * log10(alturaCm) +
+                    36.76
+
+        } else {
+
+            val diferenca = cinturaCm + quadrilCm - pescocoCm
+            if (diferenca <= 0) return 0.0
+
+            163.205 * log10(diferenca) -
+                    97.684 * log10(alturaCm) -
+                    78.387
+        }
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mauricio.calculadoraimc.data.Medicao
+import com.mauricio.calculadoraimc.domain.CalculadoraSaude
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -30,6 +31,9 @@ fun DetailScreen(
         }
     ) { padding ->
         if (medicao != null) {
+            // Calcula a Taxa de Consumo Diário (TCD)
+            val tcd = CalculadoraSaude.calcularTCD(medicao.tmb, medicao.atividade)
+
             Column(
                 modifier = Modifier
                     .padding(padding)
@@ -56,9 +60,16 @@ fun DetailScreen(
                 DetalheItem("Altura", "${medicao.altura} m")
                 DetalheItem("Idade", "${medicao.idade} anos")
                 DetalheItem("Gênero", medicao.genero)
+
+                DetalheItem("Frequência de Atividade", medicao.atividade) // NOVO CAMPO
+
                 Divider()
+
                 DetalheItem("Peso Ideal Estimado", "${String.format("%.1f", medicao.pesoIdeal)} kg")
-                DetalheItem("Taxa Metabólica (TMB)", "${String.format("%.0f", medicao.tmb)} kcal")
+                DetalheItem("Taxa Metabólica Basal (TMB)", "${String.format("%.0f", medicao.tmb)} kcal")
+
+                DetalheItem("Taxa de Consumo Diário (TCD)", "${String.format("%.0f", tcd)} kcal") // NOVO CAMPO
+
                 DetalheItem("Gordura Corporal", "${String.format("%.1f", medicao.gordura)} %")
             }
         } else {
