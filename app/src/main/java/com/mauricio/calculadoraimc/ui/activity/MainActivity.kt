@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import com.mauricio.calculadoraimc.data.AppDatabase
-import com.mauricio.calculadoraimc.ui.CalculadoraNavHost
+import com.mauricio.calculadoraimc.ui.navigation.CalculadoraNavHost
 import com.mauricio.calculadoraimc.ui.theme.CalculadoraIMCTheme // Use o nome do seu tema se for diferente
 import com.mauricio.calculadoraimc.viewmodel.CalculadoraViewModel
 import com.mauricio.calculadoraimc.viewmodel.CalculadoraViewModelFactory

@@ -1,4 +1,4 @@
-package com.mauricio.calculadoraimc.ui
+package com.mauricio.calculadoraimc.ui.navigation
 
 import androidx.compose.runtime.*
 import androidx.navigation.NavType
